@@ -1,0 +1,49 @@
+---
+version: '3'
+
+tasks:
+  clean:
+    cmds: 
+      - rm -rf .terraform
+      - rm terraform.tfstate || true
+      - rm terraform.tfstate.backup || true
+      - rm terraform.lock.hcl || true
+  
+  docs:
+    cmds:
+      - terraform-docs .
+
+  init: 
+    cmds: 
+      - terraform init -backend=false {{ .CLI_ARGS}}
+
+  plan:
+    deps: [init] 
+    cmds: 
+      - terraform plan -var-file=config/terraform.tfvars  {{ .CLI_ARGS}}
+  
+  apply:
+    deps: [init]
+    cmds:
+      - terraform apply -var-file=config/terraform.tfvars  -auto-approve {{ .CLI_ARGS}}
+
+  destroy:
+    deps: [init]
+    cmds:
+      - terraform destroy -var-file=config/terraform.tfvars  -auto-approve {{ .CLI_ARGS}}
+  
+  full:
+    deps: [clean]
+    cmds:
+      - terraform init -backend=false
+      - terraform plan -var-file=config/terraform.tfvars  {{ .CLI_ARGS}}
+      - terraform apply -var-file=config/terraform.tfvars  -auto-approve {{ .CLI_ARGS}}
+      - terraform destroy -var-file=config/terraform.tfvars  -auto-approve {{ .CLI_ARGS}}
+  
+  test:
+    deps: [clean]
+    dir: ../../test/src
+    cmds:
+      - go test -v ./... -run TestRecipeSimple -timeout 30m
+
+  

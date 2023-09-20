@@ -1,0 +1,11 @@
+# Ignore related terraform, and terragrunt files
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfplan.*
+**/.terraform/
+**/.terragrunt-cache/
+.terraform/
+
+# Ignore exercise decription
+Exercise.txt

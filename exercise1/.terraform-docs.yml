@@ -1,0 +1,44 @@
+formatter: markdown table
+
+header-from: main.tf
+
+content: |-
+    # ☁️ AWS VPC module
+    ## Description
+    {{ .Header }}
+    This module creates a VPC with the following resources:
+    * 🚀 Main VPC.
+    * 🚀 Public subnets.
+    * 🚀 Private subnets.
+    * 🚀 Internet gateway.
+    * 🚀 NAT gateway.
+    * 🚀 Route tables.
+    * 🚀 Route tables.
+
+
+    Please note only one NAT gateway is created for financial reasons. Improvement opportunity to create one per AZ.
+
+    Todo: 
+    # acl??
+    # terratest, example
+    # tflint
+    # cidr kalkulacio???
+    # mass subnetwork output
+
+    {{ .Header }}
+    {{ .Footer }}
+    {{ .Inputs }}
+    {{ .Modules }}
+    {{ .Outputs }}
+    {{ .Providers }}
+    {{ .Requirements }}
+    {{ .Resources }}
+
+
+output:
+    file: README.md
+    mode: inject
+    template: |-
+        <!-- BEGIN_TF_DOCS -->
+        {{ .Content }}
+        <!-- END_TF_DOCS -->
