@@ -13,7 +13,7 @@ content: |-
     * 🚀 Internet gateway.
     * 🚀 NAT gateway.
     * 🚀 Route tables.
-    * 🚀 Route tables.
+    * 🚀 VPC Endpoint.
 
 
     Please note only one NAT gateway is created for financial reasons. Improvement opportunity to create one per AZ.
