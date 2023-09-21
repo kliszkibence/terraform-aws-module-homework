@@ -1,0 +1,33 @@
+formatter: markdown table
+
+header-from: main.tf
+
+content: |-
+    # ☁️ AWS S3 bucket for backup
+    ## Description
+    {{ .Header }}
+    This template create S3 bucket for backup
+    * 🚀 S3
+    * 🚀 Ownership control
+    * 🚀 Lifecycle configuration
+    * 🚀 Intelligent tiering
+    * 🚀 Server side encription
+    * 🚀 Bucket Policydocument (Trusted role and bucket owner full control)
+    
+    {{ .Header }}
+    {{ .Footer }}
+    {{ .Inputs }}
+    {{ .Modules }}
+    {{ .Outputs }}
+    {{ .Providers }}
+    {{ .Requirements }}
+    {{ .Resources }}
+
+
+output:
+    file: README.md
+    mode: inject
+    template: |-
+        <!-- BEGIN_TF_DOCS -->
+        {{ .Content }}
+        <!-- END_TF_DOCS -->

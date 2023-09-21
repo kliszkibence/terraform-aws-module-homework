@@ -1,0 +1,41 @@
+---
+version: '3'
+
+includes:
+    simple:
+        taskfile: ./examples/simple/TaskFile.yml
+        dir: ./examples/simple
+
+    multiple:
+        taskfile: ./examples/multiple/TaskFile.yml
+        dir: ./examples/multiple
+
+tasks:
+    clean:
+        cmds:
+            - rm -rf .terraform
+            - rm terraform.tfstate || true
+            - rm terraform.tfstate.backup || true
+            - rm .terraform.lock.hcl || true
+
+    init:
+        deps: [clean]
+        cmds:
+            - terraform init -backend=false {{ .CLI_ARGS }}
+
+    check:
+        deps: [init]
+        cmds:
+            - terraform validate {{ .CLI_ARGS }}
+            - tflint --init
+            - tflint .
+            - terraform-docs markdown table .
+
+    docs:
+        cmds:
+            - terraform-docs .
+
+    # tests:
+    #     dir: test/src
+    #     cmds:
+    #         - go test -v .

@@ -1,0 +1,5 @@
+aws_region = "us-east-1"
+environment = "development"
+owner = "me"
+project = "facingtosalary"
+bucket_name = "backupbucket-justforthistest-bence"
