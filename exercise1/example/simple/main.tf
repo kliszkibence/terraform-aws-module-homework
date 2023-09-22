@@ -9,5 +9,5 @@ module "vpc" {
     owner = var.owner
     project = var.project
     number_of_azs = var.number_of_azs
-    availability_zones = var.availability_zones
+    # availability_zones = var.availability_zones
 }

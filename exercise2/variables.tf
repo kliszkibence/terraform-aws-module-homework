@@ -56,13 +56,3 @@ variable "trusted_role_arn" {
     description = "Backup service role arns"
     default = "arn:aws:iam::123456789012:role/backup_uploader"
 }
-
-# locals {
-#     trusted_role_arn = "arn:aws:iam::123456789012:role/backup_uploader"
-# }
-
-# locals {
-#     trusted_role_arns = [
-#         local. somthing 
-#     ]
-# }

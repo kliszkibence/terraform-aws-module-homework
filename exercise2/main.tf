@@ -57,21 +57,17 @@ resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
 
 data "aws_iam_policy_document" "allow_access_from_another_account" {
   statement {
+    effect = "Allow"
     principals {
-      type        = "AWS"
+      type        = "Federated"
       identifiers = [var.trusted_role_arn]
     }
-
     actions = [
-      "s3:PutObject",
-      "s3:PutObjectTagging"
+      "s3:PutObject"
     ]
-
     resources = [
-      aws_s3_bucket.backupbucket.arn,
-      "${aws_s3_bucket.backupbucket.arn}/*",
+      "${aws_s3_bucket.backupbucket.arn}/*"
     ]
-
     condition {
       test = "StringEquals"
       variable = "s3:x-amz-acl"
