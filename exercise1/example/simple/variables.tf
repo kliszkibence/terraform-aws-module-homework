@@ -28,6 +28,7 @@ variable "number_of_azs"{
     description = "number_of_azs"
 }
 
-# variable "availability_zones" {
-#     type = list(string)
-# }
+variable "availability_zones" {
+    type = list(string)
+    nullable = true
+}

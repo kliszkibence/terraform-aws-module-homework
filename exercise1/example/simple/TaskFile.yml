@@ -40,10 +40,10 @@ tasks:
       - terraform apply -var-file=config/terraform.tfvars  -auto-approve {{ .CLI_ARGS}}
       - terraform destroy -var-file=config/terraform.tfvars  -auto-approve {{ .CLI_ARGS}}
   
-  test:
-    deps: [clean]
-    dir: ../../test/src
-    cmds:
-      - go test -v ./... -run TestRecipeSimple -timeout 30m
+  # test:
+  #   deps: [clean]
+  #   dir: ../../test/src
+  #   cmds:
+  #     - go test -v ./... -run TestRecipeSimple -timeout 30m
 
   

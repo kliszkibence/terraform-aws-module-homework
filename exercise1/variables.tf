@@ -40,7 +40,7 @@ variable "instance_tenancy" {
 EOF
     default = "default"
     validation {
-        condition = var.instance_tenancy == "default" || "dedicated"
+        condition = var.instance_tenancy == "default" || var.instance_tenancy == "dedicated"
         error_message = "The instance_tenancy variable's value must be default or dedicated. https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc#instance_tenancy"
     }
 }
@@ -48,6 +48,7 @@ EOF
 variable "availability_zones" {
     type    = list(string)
     nullable = true
+    default = null
 }
 
 variable "number_of_azs"{

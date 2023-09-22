@@ -1,21 +1,20 @@
 provider "aws" {
   region = var.aws_region
-  default_tags = {
-    Environment = var.environment
-    Owner = var.owner
-    Project = var.project
+  default_tags {
+    tags = {
+      Environment = var.environment
+      Owner = var.owner
+      Project = var.project
+    }
   }
 }
 
 resource "aws_vpc" "main" {
   cidr_block       = var.cidr_block
   instance_tenancy = var.instance_tenancy
-  tags = merge(
-    var.default_tags,
-    {
+  tags = {
         Additional_tag = var.additional_tag
     }
-  )
 
 }
 
@@ -28,7 +27,6 @@ resource "aws_subnet" "public" {
     availability_zone_id = each.value
     vpc_id = aws_vpc.main.id
     cidr_block = cidrsubnet(var.cidr_block,4,each.key)
-    tags = var.default_tags
 }
 
 resource "aws_subnet" "private" {
@@ -36,17 +34,14 @@ resource "aws_subnet" "private" {
     availability_zone_id = each.value
     vpc_id = aws_vpc.main.id
     cidr_block = cidrsubnet(var.cidr_block,4,length(local.azs_to_use)+each.key)
-    tags = var.default_tags
 }
 
 resource "aws_internet_gateway" "gw" {
     vpc_id = aws_vpc.main.id
-    tags = var.default_tags
 }
 
 resource "aws_route_table" "public" {
     vpc_id = aws_vpc.main.id
-    tags = var.default_tags
 }
 
 resource "aws_route" "public_igw" {
@@ -63,12 +58,10 @@ resource "aws_route_table_association" "public" {
 
 resource "aws_nat_gateway" "public" {
   subnet_id  = aws_subnet.public[0].id
-  tags = var.default_tags
 }
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
-  tags = var.default_tags
 }
 
 resource "aws_route" "private_ngw" {
@@ -86,7 +79,6 @@ resource "aws_route_table_association" "private" {
 resource "aws_vpc_endpoint" "s3" {
     vpc_id       = aws_vpc.main.id
     service_name = "com.amazonaws.${var.aws_region}.s3"
-    tags = var.default_tags
 }
 
 
