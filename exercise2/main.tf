@@ -3,8 +3,8 @@ provider "aws" {
   default_tags {
     tags = {
       Environment = var.environment
-      Owner = var.owner
-      Project = var.project
+      Owner       = var.owner
+      Project     = var.project
     }
   }
 }
@@ -39,13 +39,13 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "example-entire-bucke
     access_tier = "ARCHIVE_ACCESS"
     days        = var.archive_archive_days
   }
-} 
+}
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "sse_config" {
   bucket = aws_s3_bucket.backupbucket.id
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm     = var.sse_algorithm
+      sse_algorithm = var.sse_algorithm
     }
   }
 }
@@ -69,9 +69,9 @@ data "aws_iam_policy_document" "allow_access_from_another_account" {
       "${aws_s3_bucket.backupbucket.arn}/*"
     ]
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "s3:x-amz-acl"
-      values = ["bucket-owner-full-control"]
+      values   = ["bucket-owner-full-control"]
     }
   }
 }

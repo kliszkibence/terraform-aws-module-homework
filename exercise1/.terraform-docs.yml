@@ -18,12 +18,6 @@ content: |-
 
     Please note only one NAT gateway is created for financial reasons. Improvement opportunity to create one per AZ.
 
-    Todo: 
-    # acl??
-    # terratest, example
-    # tflint
-    # cidr kalkulacio???
-    # mass subnetwork output
 
     {{ .Header }}
     {{ .Footer }}

@@ -3,12 +3,8 @@ version: '3'
 
 includes:
     simple:
-        taskfile: ./examples/simple/TaskFile.yml
-        dir: ./examples/simple
-
-    multiple:
-        taskfile: ./examples/multiple/TaskFile.yml
-        dir: ./examples/multiple
+        taskfile: ./example/simple/TaskFile.yml
+        dir: ./example/simple
 
 tasks:
     clean:
@@ -28,14 +24,10 @@ tasks:
         cmds:
             - terraform validate {{ .CLI_ARGS }}
             - tflint --init
-            - tflint .
-            - terraform-docs markdown table .
+            - tflint --recursive
+            - terraform-docs .
+            - terraform fmt
 
     docs:
         cmds:
             - terraform-docs .
-
-    # tests:
-    #     dir: test/src
-    #     cmds:
-    #         - go test -v .

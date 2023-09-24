@@ -39,11 +39,13 @@ tasks:
       - terraform plan -var-file=config/terraform.tfvars  {{ .CLI_ARGS}}
       - terraform apply -var-file=config/terraform.tfvars  -auto-approve {{ .CLI_ARGS}}
       - terraform destroy -var-file=config/terraform.tfvars  -auto-approve {{ .CLI_ARGS}}
-  
-  # test:
-  #   deps: [clean]
-  #   dir: ../../test/src
-  #   cmds:
-  #     - go test -v ./... -run TestRecipeSimple -timeout 30m
 
+  check:
+      deps: [init]
+      cmds:
+          - terraform validate {{ .CLI_ARGS }}
+          - tflint --init
+          - tflint --recursive
+          - terraform-docs .
+          - terraform fmt
   
