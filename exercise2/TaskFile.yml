@@ -12,6 +12,15 @@ tasks:
   docs:
     cmds:
       - terraform-docs .
+  
+  check:
+    deps: [init]
+    cmds:
+        - terraform validate {{ .CLI_ARGS }}
+        - tflint --init
+        - tflint --recursive
+        - terraform-docs .
+        - terraform fmt
 
   init: 
     cmds: 

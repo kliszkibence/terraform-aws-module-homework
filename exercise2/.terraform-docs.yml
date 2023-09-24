@@ -14,6 +14,14 @@ content: |-
     * 🚀 Server side encription
     * 🚀 Bucket Policydocument (Trusted role and bucket owner full control)
     
+    Note I used Federated Principal type for unittesting. 
+
+    Cross account sharing with S3 buckets: If you add a different account’s IAM role to a bucket policy they will be connected by a unique ID and not any other role properties (role name).
+    This is for security reason. IAM role mustn’t be recreated but updated. If the role is recreated the policy association would be broken. Fix: S3 bucket policy has to be redeployed to associate it with the new role ID.
+    https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-roles
+    https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-unique-ids
+
+
     {{ .Header }}
     {{ .Footer }}
     {{ .Inputs }}

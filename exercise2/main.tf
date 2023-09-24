@@ -34,10 +34,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "backupbucket" {
 resource "aws_s3_bucket_intelligent_tiering_configuration" "example-entire-bucket" {
   bucket = aws_s3_bucket.backupbucket.id
   name   = "EntireBucketBackupTiering"
-
   tiering {
     access_tier = "ARCHIVE_ACCESS"
-    days        = var.archive_archive_days
+    days        = var.archive_access_days
   }
 }
 
@@ -60,6 +59,7 @@ data "aws_iam_policy_document" "allow_access_from_another_account" {
     effect = "Allow"
     principals {
       type        = "Federated"
+      # type        = "AWS"
       identifiers = [var.trusted_role_arn]
     }
     actions = [

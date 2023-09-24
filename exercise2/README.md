@@ -10,23 +10,30 @@ This template create S3 bucket for backup
 * 🚀 Server side encription
 * 🚀 Bucket Policydocument (Trusted role and bucket owner full control)
 
+Note I used Federated Principal type for unittesting.
+
+Cross account sharing with S3 buckets: If you add a different account’s IAM role to a bucket policy they will be connected by a unique ID and not any other role properties (role name).
+This is for security reason. IAM role mustn’t be recreated but updated. If the role is recreated the policy association would be broken. Fix: S3 bucket policy has to be redeployed to associate it with the new role ID.
+https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-roles
+https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-unique-ids
+
+
 
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_archive_archive_days"></a> [archive\_archive\_days](#input\_archive\_archive\_days) | S3 Intelligent-Tiering access tier. Valid values: ARCHIVE\_ACCESS, DEEP\_ARCHIVE\_ACCESS. https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_intelligent_tiering_configuration#access_tier | `number` | `30` | no |
+| <a name="input_archive_access_days"></a> [archive\_access\_days](#input\_archive\_access\_days) | Number of consecutive days of no access after which an object will be eligible to be transitioned to the corresponding tier. https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_intelligent_tiering_configuration#access_tier | `number` | `91` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region to deploy the resources | `string` | n/a | yes |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | (Optional, Forces new resource) Name of the bucket. If omitted, Terraform will assign a random, unique name. <br>    Must be lowercase and less than or equal to 63 characters in length. A full list of bucket naming rules may be found here.<br>    https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html | `string` | n/a | yes |
-| <a name="input_deep_archive_access_days"></a> [deep\_archive\_access\_days](#input\_deep\_archive\_access\_days) | S3 Intelligent-Tiering access tier. Valid values: ARCHIVE\_ACCESS, DEEP\_ARCHIVE\_ACCESS. https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_intelligent_tiering_configuration#access_tier | `number` | `60` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment to deploy the resources | `string` | n/a | yes |
 | <a name="input_expiration_days"></a> [expiration\_days](#input\_expiration\_days) | Lifetime, in days, of the objects that are subject to the rule. The value must be a non-zero positive integer. https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_lifecycle_configuration#days | `number` | `180` | no |
 | <a name="input_object_ownership"></a> [object\_ownership](#input\_object\_ownership) | Object ownership. Valid values: BucketOwnerPreferred, ObjectWriter or BucketOwnerEnforced. https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_ownership_controls#object_ownership | `string` | `"BucketOwnerPreferred"` | no |
 | <a name="input_owner"></a> [owner](#input\_owner) | The owner of the deployed resources | `string` | n/a | yes |
 | <a name="input_project"></a> [project](#input\_project) | The project where the resources belongs to | `string` | n/a | yes |
 | <a name="input_sse_algorithm"></a> [sse\_algorithm](#input\_sse\_algorithm) | Server-side encryption algorithm to use. Valid values are AES256 and aws:kms https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#sse_algorithm | `string` | `"AES256"` | no |
-| <a name="input_trusted_role_arn"></a> [trusted\_role\_arn](#input\_trusted\_role\_arn) | Backup service role arns | `string` | `"arn:aws:iam::123456789012:role/backup_uploader"` | no |
+| <a name="input_trusted_role_arn"></a> [trusted\_role\_arn](#input\_trusted\_role\_arn) | Backup service role arn | `string` | `"arn:aws:iam::123456789012:role/backup_uploader"` | no |
 ## Modules
 
 No modules.

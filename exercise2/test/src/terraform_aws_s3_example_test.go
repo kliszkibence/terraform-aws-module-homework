@@ -50,7 +50,4 @@ func TestRecipeSimple(t *testing.T) {
 	time.Sleep(40 * time.Second)
 	fmt.Println("Sleep Over.....")
 
-	// assert.Equal(t, terraformOptions.Vars["bucket_name"], bucketName)
-	// assert.Equal(t, bucketName, bucket_name)
-
 }
